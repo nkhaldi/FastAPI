@@ -8,7 +8,6 @@ import data_handler as dh
 
 app = FastAPI()
 
-
 @app.get("/")
 async def root():
     response = HTMLResponse("""
@@ -19,14 +18,18 @@ async def root():
     return response
 
 
+# Принимает cvs-файл, валидирует значения и возвращает его в формате json
 @app.post("/upload")
 def upload(file: UploadFile = File(...)):
-    data = dh.parse_csv(file.file)
+    data = dh.get_data(file.file)
     file.file.close()
+    dh.save_data(data)
+
     return data
 
 
-@app.get("/test")
+# Отображает информацию по счёту
+@app.get("/get_service")
 async def root():
     response = HTMLResponse("test")
     return response
