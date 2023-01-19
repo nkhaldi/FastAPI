@@ -16,7 +16,8 @@ def home():
 def get_book(
     q: List[str] = Query(
         ["qwe", "asd"],
-    description="Search book", deprecated=True)
+        description="Search book", deprecated=True
+    )
 ):
     return q
 
@@ -36,7 +37,8 @@ def get_single_book(
     response_model_exclude_unset=True
 )
 def create_book(item: Book, author: Author, quantity: int = Body(...)):
-    return {"item": item, "author": author, "quantity": quantity}
+    return item
+    # return {"item": item, "author": author, "quantity": quantity}
 
 
 @app.post('/bookout', response_model=BookOut)

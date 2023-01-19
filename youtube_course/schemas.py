@@ -11,17 +11,16 @@ class Author(BaseModel):
     first_name: str = Field(..., max_length=25)
     last_name: str
     age: int = Field(
-        ..., gt=15, lt=90,
-        description="Author's age must be more than 15 and less than 90"
+        ..., ge=15, le=90,
+        description="Author's age must be in [15; 90]"
     )
 
-'''
+    # The same validator
     @validator('age')
-    def check_age(cls, v):
-        if 15 < v < 90:
-            raise ValueError("Author's age must be more than 15 and less than 90")
-        return v
-'''
+    def check_age(cls, val):
+        if 15 > val or val > 90:
+            raise ValueError("Author's age must be in [15; 90]")
+        return val
 
 
 class Book(BaseModel):
@@ -29,7 +28,7 @@ class Book(BaseModel):
     writer: str
     duration: str
     date: date
-    summary: str 
+    summary: str
     genres: List[Genre] = []
     pages: int
 
