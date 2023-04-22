@@ -1,8 +1,10 @@
+from datetime import datetime
+from enum import Enum
 from typing import List
 
 from fastapi import FastAPI
 from pydantic import BaseModel
-
+from pydantic.dataclasses import Field
 
 app = FastAPI(
     title="Trading App"
@@ -20,16 +22,34 @@ fake_trades = [
 ]
 
 
+class DegreeType(Enum):
+    newbie: "newbie"
+    expert: "expert"
+
+
+class Degree(BaseModel):
+    id: int
+    created_at: datetime
+    type_degree: DegreeType
+
+
+class User(BaseModel):
+    id: int
+    role: str
+    name: str
+    degree: List
+
+
 class Trade(BaseModel):
     id: int
     user_id: int
-    currency: str
+    currency: str = Field(max_length=5)
     side: str
-    price: float
+    price: float = Field(ge=0)
     amount: float
 
 
-@app.get('/users/{user_id}')
+@app.get('/users/{user_id}', response_model=List[User])
 def get_user(user_id: int):
     return [user for user in fake_users if user.get('id') == user_id]
 
