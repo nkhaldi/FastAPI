@@ -1,6 +1,6 @@
 from datetime import datetime
 from enum import Enum
-from typing import List
+from typing import List, Optional
 
 from fastapi import FastAPI
 from pydantic import BaseModel
@@ -37,7 +37,7 @@ class User(BaseModel):
     id: int
     role: str
     name: str
-    degree: List
+    degree: Optional[List[Degree]] = []
 
 
 class Trade(BaseModel):
