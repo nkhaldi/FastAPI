@@ -1,4 +1,7 @@
+from typing import List
+
 from fastapi import FastAPI
+from pydantic import BaseModel
 
 
 app = FastAPI(
@@ -17,6 +20,15 @@ fake_trades = [
 ]
 
 
+class Trade(BaseModel):
+    id: int
+    user_id: int
+    currency: str
+    side: str
+    price: float
+    amount: float
+
+
 @app.get('/users/{user_id}')
 def get_user(user_id: int):
     return [user for user in fake_users if user.get('id') == user_id]
@@ -32,3 +44,9 @@ def change_user_name(user_id: int, new_name: str):
     curr_user = list(filter(lambda user: user.get('id') == user_id, fake_users))[0]
     curr_user['name'] = new_name
     return {'status': 200, 'data': curr_user}
+
+
+@app.post('/trades')
+def add_trades(trades: List[Trade]):
+    fake_trades.extend(trades)
+    return {'status': 200, 'data': fake_trades}
