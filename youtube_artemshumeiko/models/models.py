@@ -14,7 +14,7 @@ roles = Table(
 )
 
 users = Table(
-    'roles',
+    'users',
     metadata,
     Column('id', Integer, primary_key=True),
     Column('email', String, nullable=False),

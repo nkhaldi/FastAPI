@@ -2,6 +2,7 @@
 
 exclude =
     .venv/
-    __pycache__,
+    __pycache__/,
+    migrations/
 
 max-line-length = 120
