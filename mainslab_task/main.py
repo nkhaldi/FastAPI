@@ -1,20 +1,21 @@
 #!/usr/bin/env python
 
+import data_handler as dh
 from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import HTMLResponse
 
-import data_handler as dh
-
-
 app = FastAPI()
+
 
 @app.get("/")
 async def root():
-    response = HTMLResponse("""
+    response = HTMLResponse(
+        """
         <a href="/upload"><b>UPLOAD</b></a>
         <br><br>
         <a href="/test">TEST</a>
-    """)
+    """
+    )
     return response
 
 
