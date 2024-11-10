@@ -6,7 +6,6 @@ from io import StringIO
 from fastapi import FastAPI, File, HTTPException, Request, UploadFile
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
-
 from routes.database import RoutePoint, close_db, init_db
 from routes.utils import delete_route_from_db, get_route_from_db, optimize_route, save_route_to_db
 
